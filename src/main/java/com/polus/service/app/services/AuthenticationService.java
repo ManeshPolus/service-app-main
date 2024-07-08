@@ -70,6 +70,7 @@ public class AuthenticationService {
         Employee employee = employeeRepository.findByUsername(loginRequest.getUsername());
         return employee;
     }*/
+    
     public LoginResponse authenticate(LoginRequest loginRequest) {
         Employee employee = employeeRepository.findUserByUsernameWithRoles(loginRequest.getUsername());
         if (employee != null && employee.getPassword().equals(loginRequest.getPassword())) {
