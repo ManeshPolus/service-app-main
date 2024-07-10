@@ -14,18 +14,18 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "employee_role")
+@Table(name = "EMPLOYEE_ROLE")
 public class EmployeeRole {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "ID")
 	private Integer id;
 
 	@ManyToOne
-	@JoinColumn(name = "employee_id", referencedColumnName = "employee_id")
+	@JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "EMPLOYEE_ID")
 	private Employee employee;
 
 	@ManyToOne
-	@JoinColumn(name = "role_id", referencedColumnName = "role_id")
+	@JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID")
 	private Role role;
 }

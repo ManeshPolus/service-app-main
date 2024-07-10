@@ -73,7 +73,7 @@ public class AuthenticationService {
 	}
 
 	public LoginResponse authenticate(LoginRequest loginRequest) {
-		Employee employee = employeeRepository.findUserByUsernameWithRoles(loginRequest.getUsername());
+		Employee employee = employeeRepository.findByUsername(loginRequest.getUsername());
 		if (employee != null && employee.getPassword().equals(loginRequest.getPassword())) {
 			List<RoleDto> roles = employee.getEmployeeRoles().stream().map(employeeRole -> {
 				RoleDto roleDto = new RoleDto();
