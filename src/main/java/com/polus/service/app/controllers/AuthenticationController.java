@@ -4,15 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.polus.service.app.dto.LoginRequest;
 import com.polus.service.app.dto.LoginResponse;
 import com.polus.service.app.dto.SignUpRequest;
+import com.polus.service.app.exceptions.UsernameAlreadyExistsException;
 import com.polus.service.app.repository.EmployeeRepository;
 import com.polus.service.app.services.AuthenticationService;
 
@@ -20,54 +20,29 @@ import com.polus.service.app.services.AuthenticationService;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthenticationController {
-	
 
-    @Autowired
-    private AuthenticationService authService;
-    
-    @Autowired
-    EmployeeRepository employee;
+	@Autowired
+	private AuthenticationService authService;
 
-    @PostMapping("/signup")
-    public ResponseEntity<String> signUp(@RequestBody SignUpRequest signUpRequest) {
-        
-    	authService.signUp(signUpRequest);
-        return new ResponseEntity<>("Sign up successful", HttpStatus.CREATED);
-    }
+	@Autowired
+	EmployeeRepository employee;
 
-   /* @PostMapping("/login")
-    public ResponseEntity<Object> login(@RequestBody LoginRequest loginRequest) {
-    	
-    	Employee employee = authService.authenticate(loginRequest);
-        if (employee != null && employee.getPassword().equals(loginRequest.getPassword())) {            
-            return ResponseEntity.ok(employee);
-        } 
-        else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
-        }
-    }*/
-    @PostMapping("/login")
-    public ResponseEntity<Object> login(@RequestBody LoginRequest loginRequest) {
-        LoginResponse loginResponse = authService.authenticate(loginRequest);
-        if (loginResponse != null) {
-            return ResponseEntity.ok(loginResponse);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
-        }
-    }
+	@PostMapping("/signup")
+	public ResponseEntity<String> signUp(@RequestBody SignUpRequest signUpRequest) {
+		return authService.signUp(signUpRequest);
+	}
 
-    @PostMapping("/assignRole")
-    public ResponseEntity<String> assignRoleToEmployee(@RequestParam Integer employeeId,@RequestParam Integer roleId) {
-        
-    	authService.assignRoleToEmployee(employeeId, roleId);
-        return ResponseEntity.ok("Role assigned to employee");
-    }
-    
-    /*@PostMapping("/login/{id}/generateTicket")
-    public ResponseEntity<?> generateTicket(@RequestBody GenerateTicket ticket) {
-		
-    	authService.generateTicket(ticket);
-    	return ResponseEntity.ok(ticket);
-    	
-    }*/
+	@PostMapping("/login")
+	public ResponseEntity<Object> login(@RequestBody LoginRequest loginRequest) {
+		LoginResponse loginResponse = authService.authenticate(loginRequest);
+		if (loginResponse == null) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username or password is incorrect");
+		}
+		return ResponseEntity.ok(loginResponse);
+	}
+
+	@ExceptionHandler(UsernameAlreadyExistsException.class)
+	public ResponseEntity<String> handleUsernameAlreadyExistsException(UsernameAlreadyExistsException exception) {
+		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+	}
 }
