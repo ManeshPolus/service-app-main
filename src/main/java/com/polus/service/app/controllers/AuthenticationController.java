@@ -1,5 +1,7 @@
 package com.polus.service.app.controllers;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,8 @@ import com.polus.service.app.services.AuthenticationService;
 @RequestMapping("/api/auth")
 public class AuthenticationController {
 
+	private Logger logger = LogManager.getLogger(AuthenticationController.class);
+
 	@Autowired
 	private AuthenticationService authService;
 
@@ -36,6 +40,7 @@ public class AuthenticationController {
 	public ResponseEntity<Object> login(@RequestBody LoginRequest loginRequest) {
 		LoginResponse loginResponse = authService.authenticate(loginRequest);
 		if (loginResponse == null) {
+			logger.info("Username or password is incorrect");
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username or password is incorrect");
 		}
 		return ResponseEntity.ok(loginResponse);

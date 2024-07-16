@@ -1,5 +1,6 @@
 package com.polus.service.app.entities;
 
+import java.io.Serializable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +16,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "EMPLOYEE_ROLE")
-public class EmployeeRole {
+public class EmployeeRole implements Serializable {
+
+	static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")

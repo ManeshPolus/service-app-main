@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import com.polus.service.app.entities.Employee;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
+
 	Employee findByUsername(String username);
 
 	boolean existsByUsername(String username);

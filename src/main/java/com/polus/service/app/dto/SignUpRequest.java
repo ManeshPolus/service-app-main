@@ -11,7 +11,7 @@ public class SignUpRequest {
 	String email;
 	String designation;
 	String state;
-	String country;
+	String countryCode;
 	String phoneNumber;
 	String username;
 	String password;

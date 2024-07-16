@@ -6,10 +6,13 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
@@ -17,7 +20,10 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "EMPLOYEE")
-public class Employee {
+public class Employee implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "EMPLOYEE_ID")
@@ -29,7 +35,7 @@ public class Employee {
 	@Column(name = "LAST_NAME")
 	private String lastname;
 
-	@Column(name = "E_MAIL")
+	@Column(name = "EMAIL")
 	private String email;
 
 	@Column(name = "DESIGNATION")
@@ -38,8 +44,9 @@ public class Employee {
 	@Column(name = "STATE")
 	private String state;
 
-	@Column(name = "COUNTRY")
-	private String country;
+	@ManyToOne
+	@JoinColumn(name = "COUNTRY_CODE")
+	private Country countryCode;
 
 	@Column(name = "PHONE_NUMBER")
 	private String phoneNumber;
@@ -53,6 +60,6 @@ public class Employee {
 	@Column(name = "CREATED_DATE")
 	private Date createdDate;
 
-	@OneToMany(mappedBy = "EMPLOYEE", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "employee", fetch = FetchType.LAZY)
 	private Set<EmployeeRole> employeeRoles;
 }
