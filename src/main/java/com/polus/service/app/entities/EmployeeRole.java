@@ -1,5 +1,6 @@
 package com.polus.service.app.entities;
 
+import java.io.Serializable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,48 +9,27 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Table(name = "employee_role")
-public class EmployeeRole {
+@Getter
+@Setter
+@Table(name = "EMPLOYEE_ROLE")
+public class EmployeeRole implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+	static final long serialVersionUID = 1L;
 
-    @ManyToOne
-    @JoinColumn(name = "employee_id", referencedColumnName = "employee_id")
-    private Employee employee;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
+	private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "role_id")
-    private Role role;
-    
-	public Integer getId() {
-		return id;
-	}
+	@ManyToOne
+	@JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "EMPLOYEE_ID")
+	private Employee employee;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public Employee getEmployee() {
-		return employee;
-	}
-
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
-	}
-
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
-
-    
+	@ManyToOne
+	@JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID")
+	private Role role;
 }
-

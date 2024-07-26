@@ -1,5 +1,6 @@
 package com.polus.service.app.entities;
 
+import java.io.Serializable;
 import java.util.Set;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,55 +9,28 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Table(name = "role")
-public class Role {
+@Getter
+@Setter
+@Table(name = "ROLE")
+public class Role implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "role_id")
-    private Integer roleId;
+	private static final long serialVersionUID = 1L;
 
-    @Column(name = "role_name")
-    private String roleName;
-    
-    @Column(name = "role_description")
-    private String roleDescription;
-    
-    @OneToMany(mappedBy = "role")
-    private Set<EmployeeRole> employeeRoles;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ROLE_ID")
+	private Integer roleId;
 
-    public String getRoleDescription() {
-		return roleDescription;
-	}
+	@Column(name = "ROLE_NAME")
+	private String roleName;
 
-	public void setRoleDescription(String roleDescription) {
-		this.roleDescription = roleDescription;
-	}
+	@Column(name = "ROLE_DESCRIPTION")
+	private String roleDescription;
 
-	public Integer getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
-	}
-
-	public String getRoleName() {
-		return roleName;
-	}
-
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
-
-	public Set<EmployeeRole> getEmployeeRoles() {
-		return employeeRoles;
-	}
-
-	public void setEmployeeRoles(Set<EmployeeRole> employeeRoles) {
-		this.employeeRoles = employeeRoles;
-	} 
+	@OneToMany(mappedBy = "role")
+	private Set<EmployeeRole> employeeRoles;
 }
-
