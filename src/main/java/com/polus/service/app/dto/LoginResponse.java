@@ -9,6 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LoginResponse {
+
 	private Integer employeeId;
 	private String username;
 	private String firstname;
