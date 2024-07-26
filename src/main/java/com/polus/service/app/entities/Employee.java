@@ -59,6 +59,9 @@ public class Employee implements Serializable {
 
 	@Column(name = "CREATED_DATE")
 	private Date createdDate;
+	
+	@Column(name = "full_name")
+	private String fullname;
 
 	@OneToMany(mappedBy = "employee", fetch = FetchType.LAZY)
 	private Set<EmployeeRole> employeeRoles;

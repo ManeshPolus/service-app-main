@@ -1,6 +1,7 @@
 package com.polus.service.app.entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,21 +16,26 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "EMPLOYEE_ROLE")
-public class EmployeeRole implements Serializable {
+@Table(name = "sr_ticket_status")
+public class TicketStatus implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
-	private Integer id;
-
+	@Column(name = "TICKET_STATUS_ID")
+	private int statusId;
+	
+	@Column(name = "TICKET_STATUS_NAME")
+	private String statusName;
+	
+	@Column(name = "TICKET_STATUS_DESCRIPITION")
+	private String statusDescription;
+	
+	@Column(name = "TICKET_STATUS_CREATE_TIMESTAMP", insertable=false, updatable=false)
+	private Timestamp createTimestamp;
+	
 	@ManyToOne
-	@JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "EMPLOYEE_ID")
-	private Employee employee;
-
-	@ManyToOne
-	@JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID")
-	private Role role;
+	@JoinColumn(name = "TICKET_STATUS_CREATE_BY")
+	private Employee createBy;
 }
